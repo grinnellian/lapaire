@@ -18,6 +18,13 @@
     </label>
   </div>
 
+  <div>
+    <label>CYL:
+      <input type="number" name="cyl-od" id="cyl-od" />
+      <div id="cyl-od_val"></div>
+    </label>
+  </div>
+
   <h2>OG</h2>
   <div>
     <label>SPH:
@@ -25,6 +32,13 @@
       <div id="sph-og_val"></div>
     </label>
   </div>
+  <div>
+    <label>CYL:
+      <input type="number" name="cyl-og" id="cyl-og" />
+      <div id="cyl-og_val"></div>
+    </label>
+  </div>
+
   <div>
     <button>Submit</button>
   </div>
@@ -46,8 +60,8 @@
 
 document.getElementById("DP").addEventListener("change", DPVal);
 
-  const sphVal = function(oleil) {
-    return function(event) {
+const sphVal = function(oleil) {
+  return function(event) {
     const elem = document.getElementById(`sph-${oleil}`);
     const sph = Number.parseFloat(elem.value);
     console.log("parse sph: " + sph);
@@ -66,6 +80,34 @@ document.getElementById("DP").addEventListener("change", DPVal);
 
 document.getElementById("sph-od").addEventListener("change", sphVal("od"));
 document.getElementById("sph-og").addEventListener("change", sphVal("og"));
+
+const validatorListenerFactory = function(field, validator) {
+  return function(event) {
+    const elem = document.getElementById(field);
+    const val = Number.parseFloat(elem.value);
+    console.log(`Parsed ${field}: ${val}`)
+    const res = document.getElementById(`${field}_val`)
+    if (!res) { alert(`Validation output field missing: ${field}`)};
+    res.textContent = (validator(val) || "Looks good!")
+  }
+}
+
+const attachSymmetricFieldValidators = function(field, validator) {
+  document.getElementById(`${field}-od`).addEventListener("change", validatorListenerFactory(`${field}-od`, validator));
+  document.getElementById(`${field}-og`).addEventListener("change", validatorListenerFactory(`${field}-og`, validator));
+}
+
+const cylValidator = function(cyl) {
+  let res = null;
+  if (!(cyl <= 0 && cyl >= -10)) {
+    res = "Must be between 0 and -10."
+  } else if ((cyl % 0.25) != 0) {
+    res = "Must be in increments of 0.25."
+  }
+  return res;
+}
+
+attachSymmetricFieldValidators("cyl", cylValidator);
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
