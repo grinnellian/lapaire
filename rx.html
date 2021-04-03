@@ -25,6 +25,13 @@
     </label>
   </div>
 
+  <div>
+    <label>AXE:
+      <input type="number" name="axe-od" id="axe-od" />
+      <div id="axe-od_val"></div>
+    </label>
+  </div>
+
   <h2>OG</h2>
   <div>
     <label>SPH:
@@ -36,6 +43,13 @@
     <label>CYL:
       <input type="number" name="cyl-og" id="cyl-og" />
       <div id="cyl-og_val"></div>
+    </label>
+  </div>
+
+  <div>
+    <label>AXE:
+      <input type="number" name="axe-og" id="axe-og" />
+      <div id="axe-og_val"></div>
     </label>
   </div>
 
@@ -98,16 +112,26 @@ const attachSymmetricFieldValidators = function(field, validator) {
 }
 
 const cylValidator = function(cyl) {
-  let res = null;
   if (!(cyl <= 0 && cyl >= -10)) {
-    res = "Must be between 0 and -10."
+    return "Must be between 0 and -10."
   } else if ((cyl % 0.25) != 0) {
-    res = "Must be in increments of 0.25."
+    return "Must be in increments of 0.25."
   }
-  return res;
+  return null;
 }
 
 attachSymmetricFieldValidators("cyl", cylValidator);
+
+const axeValidator = function(axe) {
+  if (!(axe >= 1 && axe <= 180)) {
+    return "Must be between 1 and 180."
+  } else if (axe != Number.parseInt(axe)) {
+    return "Must be an integer.";
+  }
+  return null;
+}
+
+attachSymmetricFieldValidators("axe", axeValidator);
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
