@@ -133,7 +133,26 @@ const axeValidator = function(axe) {
 
 attachSymmetricFieldValidators("axe", axeValidator);
 
-// const attachFieldDependency
+// override will override any value currently in the target field, or leave current value if unspecified
+const attachFieldDependency = function (source, listener, enabledCondition, override=null) {
+  for (const oliel of ["od", "og"]) {
+    const src = document.getElementById(`${source}-${oliel}`) || alert("missing dependency source " + `${source}-${oliel}`);
+    const lstnr = document.getElementById(`${listener}-${oliel}`) || alert("missing dependent field " + `${listener}-${oliel}`);
+    src.addEventListener("change", (event) => {
+      console.log(`src ${src.id}: ${src.value}`);
+      if (!enabledCondition(src.value)) {
+        lstnr.disabled = true;
+        if (override !== null) {
+          lstnr.value = override;
+        }
+      } else {
+        lstnr.disabled = false;
+      }
+    });
+  }
+}
+
+attachFieldDependency("cyl", "axe", (cyl) => {return cyl < 0 && cyl >= -10}, 0);
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
