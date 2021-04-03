@@ -32,6 +32,13 @@
     </label>
   </div>
 
+  <div>
+    <label>ADD:
+      <input type="number" name="add-od" id="add-od" min=0 max=4 step=0.25 value=0 />
+      <div id="add-od_val"></div>
+    </label>
+  </div>
+
   <h2>OG</h2>
   <div>
     <label>SPH:
@@ -50,6 +57,13 @@
     <label>AXE:
       <input type="number" name="axe-og" id="axe-og" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
       <div id="axe-og_val"></div>
+    </label>
+  </div>
+
+  <div>
+    <label>ADD:
+      <input type="number" name="add-og" id="add-og" min=0 max=4 step=0.25 value=0 />
+      <div id="add-og_val"></div>
     </label>
   </div>
 
@@ -155,11 +169,31 @@ const attachFieldDependency = function (source, listener, enabledCondition, enab
 
 attachFieldDependency("cyl", "axe", (cyl) => {return cyl < 0 && cyl >= -10});
 
-  var urlParams = new URLSearchParams(window.location.search);
-  console.log(urlParams.toString())
-  if (urlParams.has("customerNumber")) {
-    document.getElementById("customerNumber").value = urlParams.get("customerNumber")
+const addValidator = function(add) {
+  if(add != 0) {
+    if (!(1 <= add && 4 >= add)) {
+      return "If selected, between 1 and 4.";
+    } else if ((add % 0.25) != 0) {
+      return "Increments of 0.25";
+    }
   }
+}
+
+attachSymmetricFieldValidators("add", addValidator);
+
+document.getElementById("add-od").addEventListener("change", () => {
+  document.getElementById("add-og").value = document.getElementById("add-od").value;
+});
+
+document.getElementById("add-og").addEventListener("change", () => {
+  document.getElementById("add-og").value = document.getElementById("add-od").value;
+});
+
+var urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams.toString())
+if (urlParams.has("customerNumber")) {
+  document.getElementById("customerNumber").value = urlParams.get("customerNumber")
+}
 
   // const addInputListeners = function() {
   //   alert("Input listeners!");
