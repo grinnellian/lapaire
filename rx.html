@@ -1,0 +1,80 @@
+<h1> Lapaire RX Validation Form</h1>
+<form>
+  <div>
+    <label for="customerNumber">Customer #:</label>
+    <input type="tel" name="customerNumber" id="customerNumber" pattern="\+?[\d\- ]{6,}" title="Must be customer's telephone number."> <br />
+  </div>
+  <div>
+    <label>DP:
+      <input type="text" name="DP" id="DP">
+    </label>
+    <div id="DP_val"></div>
+  </div>
+  <h2>OD</h2>
+  <div>
+    <label>SPH:
+      <input type="text" name="sph-od" id="sph-od" />
+      <div id="sph-od_val"></div>
+    </label>
+  </div>
+  <div>
+    <button>Submit</button>
+  </div>
+</form>	
+
+<script>
+  const DPVal = function(event) {
+    const elem = document.getElementById("DP");
+    const dp = Number.parseInt(elem.value);
+    console.log("parse dp: " + dp);
+    if (!(dp <= 80 && dp >= 60) ||
+    dp % 2 != 0) {
+      // alert("DP must be even and between 60 & 80");
+      document.getElementById("DP_val").textContent = "(Must be even, 60-80)"
+    } else {
+      document.getElementById("DP_val").textContent = "Looks good!"
+    }
+  }
+
+  document.getElementById("DP").addEventListener("change", DPVal);
+
+  const sphVal = function(oleil) {
+    return function(event) {
+    const elem = document.getElementById("sph-od");
+    const sph = Number.parseFloat(elem.value);
+    console.log("parse sph: " + sph);
+    const resultId = `sph-${oleil}_val`;
+    console.log("result div: " + resultId)
+    const res = document.getElementById(resultId);
+    if (!(sph <= 20 && sph >= -20)) {
+      res.textContent = "Must be between -20 and +20"
+    } else if ((sph % 0.25) != 0) {
+      res.textContent = "Must be in increments of 0.25"
+    } else {
+      res.textContent = "Looks good!"
+    }
+  }
+}
+
+document.getElementById("sph-od").addEventListener("change", sphVal("od"));
+
+  var urlParams = new URLSearchParams(window.location.search);
+  console.log(urlParams.toString())
+  if (urlParams.has("customerNumber")) {
+    document.getElementById("customerNumber").value = urlParams.get("customerNumber")
+  }
+
+  // const addInputListeners = function() {
+  //   alert("Input listeners!");
+  // }
+
+  // document.addEventListener('readystatechange', (event) => {
+  //   console.log("readystatechange: " + JSON.stringify(event));
+  //   switch(event) {
+  //     case "interactive":
+  //     case "complete":
+  //       addInputListeners();
+  //       break;
+  //   }
+  // });
+</script>
