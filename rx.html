@@ -6,28 +6,28 @@
   </div>
   <div>
     <label>DP:
-      <input type="number" name="DP" id="DP">
+      <input type="number" name="DP" id="DP" min=60 max=80 step=2 />
     </label>
     <div id="DP_val"></div>
   </div>
   <h2>OD</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-od" id="sph-od" />
+      <input type="number" name="sph-od" id="sph-od" min=-20 max=20 step=0.25 />
       <div id="sph-od_val"></div>
     </label>
   </div>
 
   <div>
     <label>CYL:
-      <input type="number" name="cyl-od" id="cyl-od" />
+      <input type="number" name="cyl-od" id="cyl-od" min=0 max=-10 step=0.25 />
       <div id="cyl-od_val"></div>
     </label>
   </div>
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-od" id="axe-od" />
+      <input type="number" name="axe-od" id="axe-od" min=0 max=180 />
       <div id="axe-od_val"></div>
     </label>
   </div>
@@ -35,20 +35,20 @@
   <h2>OG</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-og" id="sph-og" />
+      <input type="number" name="sph-og" id="sph-og" min=-20 max=20 step=0.25 />
       <div id="sph-og_val"></div>
     </label>
   </div>
   <div>
     <label>CYL:
-      <input type="number" name="cyl-og" id="cyl-og" />
+      <input type="number" name="cyl-og" id="cyl-og" min=0 max=-10 step=0.25 />
       <div id="cyl-og_val"></div>
     </label>
   </div>
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-og" id="axe-og" />
+      <input type="number" name="axe-og" id="axe-og" min=0 max=180 />
       <div id="axe-og_val"></div>
     </label>
   </div>
@@ -123,7 +123,7 @@ const cylValidator = function(cyl) {
 attachSymmetricFieldValidators("cyl", cylValidator);
 
 const axeValidator = function(axe) {
-  if (!(axe >= 1 && axe <= 180)) {
+  if (!(axe >= 0 && axe <= 180)) {
     return "Must be between 1 and 180."
   } else if (axe != Number.parseInt(axe)) {
     return "Must be an integer.";
@@ -132,6 +132,8 @@ const axeValidator = function(axe) {
 }
 
 attachSymmetricFieldValidators("axe", axeValidator);
+
+// const attachFieldDependency
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
