@@ -6,14 +6,14 @@
   </div>
   <div>
     <label>DP:
-      <input type="text" name="DP" id="DP">
+      <input type="number" name="DP" id="DP">
     </label>
     <div id="DP_val"></div>
   </div>
   <h2>OD</h2>
   <div>
     <label>SPH:
-      <input type="text" name="sph-od" id="sph-od" />
+      <input type="number" name="sph-od" id="sph-od" />
       <div id="sph-od_val"></div>
     </label>
   </div>
@@ -21,7 +21,7 @@
   <h2>OG</h2>
   <div>
     <label>SPH:
-      <input type="text" name="sph-og" id="sph-og" />
+      <input type="number" name="sph-og" id="sph-og" />
       <div id="sph-og_val"></div>
     </label>
   </div>
@@ -44,7 +44,7 @@
     }
   }
 
-  document.getElementById("DP").addEventListener("change", DPVal);
+document.getElementById("DP").addEventListener("change", DPVal);
 
   const sphVal = function(oleil) {
     return function(event) {
