@@ -17,6 +17,14 @@
       <div id="sph-od_val"></div>
     </label>
   </div>
+
+  <h2>OG</h2>
+  <div>
+    <label>SPH:
+      <input type="text" name="sph-og" id="sph-og" />
+      <div id="sph-og_val"></div>
+    </label>
+  </div>
   <div>
     <button>Submit</button>
   </div>
@@ -40,7 +48,7 @@
 
   const sphVal = function(oleil) {
     return function(event) {
-    const elem = document.getElementById("sph-od");
+    const elem = document.getElementById(`sph-${oleil}`);
     const sph = Number.parseFloat(elem.value);
     console.log("parse sph: " + sph);
     const resultId = `sph-${oleil}_val`;
@@ -57,6 +65,7 @@
 }
 
 document.getElementById("sph-od").addEventListener("change", sphVal("od"));
+document.getElementById("sph-og").addEventListener("change", sphVal("og"));
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
