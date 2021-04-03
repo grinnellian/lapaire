@@ -2,32 +2,32 @@
 <form>
   <div>
     <label for="customerNumber">Customer #:</label>
-    <input type="tel" name="customerNumber" id="customerNumber" pattern="\+?[\d\- ]{6,}" title="Must be customer's telephone number."> <br />
+    <input type="tel" name="customerNumber" id="customerNumber" pattern="\+?[\d\- ]{6,}" title="Must be customer's telephone number. Six digits or more."> <br />
   </div>
   <div>
     <label>DP:
-      <input type="number" name="DP" id="DP" min=60 max=80 step=2 />
+      <input type="number" name="DP" id="DP" min=60 max=80 step=2 value=70 />
     </label>
     <div id="DP_val"></div>
   </div>
   <h2>OD</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-od" id="sph-od" min=-20 max=20 step=0.25 />
+      <input type="number" name="sph-od" id="sph-od" min=-20 max=20 step=0.25 value=0 />
       <div id="sph-od_val"></div>
     </label>
   </div>
 
   <div>
     <label>CYL:
-      <input type="number" name="cyl-od" id="cyl-od" min=-10 max=0 step=0.25 />
+      <input type="number" name="cyl-od" id="cyl-od" min=-10 max=0 step=0.25 value=0 />
       <div id="cyl-od_val"></div>
     </label>
   </div>
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-od" id="axe-od" min=0 max=180 />
+      <input type="number" name="axe-od" id="axe-od" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
       <div id="axe-od_val"></div>
     </label>
   </div>
@@ -35,20 +35,20 @@
   <h2>OG</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-og" id="sph-og" min=-20 max=20 step=0.25 />
+      <input type="number" name="sph-og" id="sph-og" min=-20 max=20 step=0.25 value=0 />
       <div id="sph-og_val"></div>
     </label>
   </div>
   <div>
     <label>CYL:
-      <input type="number" name="cyl-og" id="cyl-og" min=-10 max=0 step=0.25 />
+      <input type="number" name="cyl-og" id="cyl-og" min=-10 max=0 step=0.25 value=0 />
       <div id="cyl-og_val"></div>
     </label>
   </div>
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-og" id="axe-og" min=0 max=180 />
+      <input type="number" name="axe-og" id="axe-og" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
       <div id="axe-og_val"></div>
     </label>
   </div>
@@ -107,8 +107,9 @@ const validatorListenerFactory = function(field, validator) {
 }
 
 const attachSymmetricFieldValidators = function(field, validator) {
-  document.getElementById(`${field}-od`).addEventListener("change", validatorListenerFactory(`${field}-od`, validator));
-  document.getElementById(`${field}-og`).addEventListener("change", validatorListenerFactory(`${field}-og`, validator));
+  for (const oeil of ["od", "og"]) {
+    document.getElementById(`${field}-${oeil}`).addEventListener("change", validatorListenerFactory(`${field}-${oeil}`, validator));
+  }
 }
 
 const cylValidator = function(cyl) {
@@ -123,7 +124,7 @@ const cylValidator = function(cyl) {
 attachSymmetricFieldValidators("cyl", cylValidator);
 
 const axeValidator = function(axe) {
-  if (!(axe >= 0 && axe <= 180)) {
+  if (!(axe >= 1 && axe <= 180)) {
     return "Must be between 1 and 180."
   } else if (axe != Number.parseInt(axe)) {
     return "Must be an integer.";
@@ -134,25 +135,25 @@ const axeValidator = function(axe) {
 attachSymmetricFieldValidators("axe", axeValidator);
 
 // override will override any value currently in the target field, or leave current value if unspecified
-const attachFieldDependency = function (source, listener, enabledCondition, override=null) {
-  for (const oliel of ["od", "og"]) {
-    const src = document.getElementById(`${source}-${oliel}`) || alert("missing dependency source " + `${source}-${oliel}`);
-    const lstnr = document.getElementById(`${listener}-${oliel}`) || alert("missing dependent field " + `${listener}-${oliel}`);
+const attachFieldDependency = function (source, listener, enabledCondition, enabledRequired=true) {
+  for (const oeil of ["od", "og"]) {
+    const src = document.getElementById(`${source}-${oeil}`) || alert("missing dependency source " + `${source}-${oeil}`);
+    const lstnr = document.getElementById(`${listener}-${oeil}`) || alert("missing dependent field " + `${listener}-${oeil}`);
     src.addEventListener("change", (event) => {
       console.log(`src ${src.id}: ${src.value}`);
       if (!enabledCondition(src.value)) {
         lstnr.disabled = true;
-        if (override !== null) {
-          lstnr.value = override;
-        }
+        lstnr.value = null;
+        document.getElementById(`${listener}-${oeil}_val`).textContent = "";
       } else {
         lstnr.disabled = false;
+        lstnr.required = enabledRequired;
       }
     });
   }
 }
 
-attachFieldDependency("cyl", "axe", (cyl) => {return cyl < 0 && cyl >= -10}, 0);
+attachFieldDependency("cyl", "axe", (cyl) => {return cyl < 0 && cyl >= -10});
 
   var urlParams = new URLSearchParams(window.location.search);
   console.log(urlParams.toString())
