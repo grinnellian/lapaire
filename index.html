@@ -78,8 +78,8 @@
     const dp = Number.parseInt(elem.value);
     console.log("parse dp: " + dp);
     if (!(dp <= 80 && dp >= 60) ||
-    dp % 2 != 0) {
-      // alert("DP must be even and between 60 & 80");
+    dp % 1 != 0) {
+      // alert("DP must be an integer between 60 & 80");
       document.getElementById("DP_val").textContent = "(Must be even, 60-80)"
     } else {
       document.getElementById("DP_val").textContent = "Looks good!"
