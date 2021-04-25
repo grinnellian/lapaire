@@ -1,8 +1,8 @@
 <h1> Lapaire RX Validation Form</h1>
 <form>
   <div>
-    <label for="customerNumber">Customer #:</label>
-    <input type="tel" name="customerNumber" id="customerNumber" pattern="\+?[\d\- ]{6,}" title="Must be customer's telephone number. Six digits or more."> <br />
+    <label for="customerId">Customer #:</label>
+    <input type="tel" name="customerId" id="customerId" pattern="\+?[\d\- ]{6,}" title="Must be customer's Freshsales ID. If blank close this page and edit the contact in Freshsales."> <br />
   </div>
   <div>
     <label>DP:
@@ -191,8 +191,8 @@ document.getElementById("add-og").addEventListener("change", () => {
 
 var urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams.toString())
-if (urlParams.has("customerNumber")) {
-  document.getElementById("customerNumber").value = urlParams.get("customerNumber")
+if (urlParams.has("customerId")) {
+  document.getElementById("customerId").value = urlParams.get("customerId")
 }
 
   // const addInputListeners = function() {
