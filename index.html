@@ -135,7 +135,7 @@ const cylValidator = function(cyl) {
   return null;
 }
 
-attachSymmetricFieldValidators("cyl", cylValidator);
+attachSymmetricFieldValidators("cf_validated_cyl", cylValidator);
 
 const axeValidator = function(axe) {
   if (!(axe >= 1 && axe <= 180)) {
