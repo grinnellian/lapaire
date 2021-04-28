@@ -28,7 +28,7 @@
   <div>
     <label>AXE:
       <input type="number" name="cf_validated_axe_od" id="cf_validated_axe_od" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
-      <div id="axe-od_val"></div>
+      <div id="cf_validated_axe_od_val"></div>
     </label>
   </div>
 
@@ -115,7 +115,7 @@ const validatorListenerFactory = function(field, validator) {
     const val = Number.parseFloat(elem.value);
     console.log(`Parsed ${field}: ${val}`)
     const res = document.getElementById(`${field}_val`)
-    if (!res) { alert(`Validation output field missing: ${field}`)};
+    if (!res) { alert(`Validation output field missing: ${field}_val`)};
     res.textContent = (validator(val) || "Looks good!")
   }
 }
