@@ -1,5 +1,5 @@
 <h1> Lapaire RX Validation Form</h1>
-<form>
+<form id="rxForm" method="POST">
   <div>
     <label for="customerId">Customer #:</label>
     <input type="tel" name="customerId" id="customerId" pattern="\+?[\d\- ]{6,}" title="Must be customer's Freshsales ID. If blank close this page and edit the contact in Freshsales."> <br />
@@ -190,10 +190,19 @@ document.getElementById("add-og").addEventListener("change", () => {
 });
 
 var urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams.toString())
+
 if (urlParams.has("customerId")) {
-  document.getElementById("customerId").value = urlParams.get("customerId")
+  const customerId = urlParams.get("customerId")
+  document.getElementById("customerId").value = customerId
+  const action=`https://ssy7xkdh9i.execute-api.us-east-2.amazonaws.com`
+  document.getElementById("rxForm").action = action
+} else {
+  alert("Customer ID required for functionality")
 }
+
+/*
+curl -H "Authorization: Token token" -H "Content-Type: application/json" -d '{"contact":{"mobile_number":"5-626-852-0503", "custom_field": {"cf_is_active": false} }}' -X PUT "https://domain.freshsales.io/api/contacts/1"
+*/
 
   // const addInputListeners = function() {
   //   alert("Input listeners!");
