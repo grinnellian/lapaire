@@ -179,7 +179,7 @@ const addValidator = function(add) {
   }
 }
 
-attachSymmetricFieldValidators("add", addValidator);
+attachSymmetricFieldValidators("cf_validated_add", addValidator);
 
 document.getElementById("cf_validated_add_od").addEventListener("change", () => {
   document.getElementById("cf_validated_add_og").value = document.getElementById("cf_validated_add_od").value;
