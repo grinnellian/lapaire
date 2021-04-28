@@ -90,7 +90,7 @@ document.getElementById("cf_validated_dp").addEventListener("change", DPVal);
 
 const sphVal = function(oleil) {
   return function(event) {
-    const elem = document.getElementById(`sph-${oleil}`);
+    const elem = document.getElementById(`cf_validated_sph_${oleil}`);
     const sph = Number.parseFloat(elem.value);
     console.log("parse sph: " + sph);
     const resultId = `sph-${oleil}_val`;
