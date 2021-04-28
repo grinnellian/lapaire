@@ -27,7 +27,7 @@
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-od" id="axe-od" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
+      <input type="number" name="cf_validated_axe_od" id="cf_validated_axe_od" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
       <div id="axe-od_val"></div>
     </label>
   </div>
@@ -55,7 +55,7 @@
 
   <div>
     <label>AXE:
-      <input type="number" name="axe-og" id="axe-og" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
+      <input type="number" name="cf_validated_axe_og" id="cf_validated_axe_og" min=1 max=180 disabled=true title="Between 0 and 180 when CYL is filled" />
       <div id="axe-og_val"></div>
     </label>
   </div>
@@ -146,7 +146,7 @@ const axeValidator = function(axe) {
   return null;
 }
 
-attachSymmetricFieldValidators("axe", axeValidator);
+attachSymmetricFieldValidators("cf_validated_axe", axeValidator);
 
 // override will override any value currently in the target field, or leave current value if unspecified
 const attachFieldDependency = function (source, listener, enabledCondition, enabledRequired=true) {
