@@ -1,26 +1,26 @@
 <h1> Lapaire RX Validation Form</h1>
 <form id="rxForm" method="POST">
   <div>
-    <label for="customerId">Customer #:</label>
-    <input type="tel" name="customerId" id="customerId" pattern="\+?[\d\- ]{6,}" title="Must be customer's Freshsales ID. If blank close this page and edit the contact in Freshsales."> <br />
+    <label for="cf_customer_id">Customer #:</label>
+    <input type="tel" name="cf_customer_id" id="cf_customer_id" pattern="\+?[\d\- ]{6,}" title="Must be customer's Freshsales ID. If blank close this page and edit the contact in Freshsales."> <br />
   </div>
   <div>
     <label>DP:
-      <input type="number" name="DP" id="DP" min=60 max=80 step=2 value=70 />
+      <input type="number" name="cf_validated_dp" id="cf_validated_dp" min=60 max=80 step=2 value=70 />
     </label>
     <div id="DP_val"></div>
   </div>
   <h2>OD</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-od" id="sph-od" min=-20 max=20 step=0.25 value=0 />
+      <input type="number" name="cf_validated_sph_od" id="cf_validated_sph_od" min=-20 max=20 step=0.25 value=0 />
       <div id="sph-od_val"></div>
     </label>
   </div>
 
   <div>
     <label>CYL:
-      <input type="number" name="cyl-od" id="cyl-od" min=-10 max=0 step=0.25 value=0 />
+      <input type="number" name="cf_validated_cyl_od" id="cf_validated_cyl_od" min=-10 max=0 step=0.25 value=0 />
       <div id="cyl-od_val"></div>
     </label>
   </div>
@@ -34,7 +34,7 @@
 
   <div>
     <label>ADD:
-      <input type="number" name="add-od" id="add-od" min=0 max=4 step=0.25 value=0 />
+      <input type="number" name="cf_validated_add_od" id="cf_validated_add_od" min=0 max=4 step=0.25 value=0 />
       <div id="add-od_val"></div>
     </label>
   </div>
@@ -42,13 +42,13 @@
   <h2>OG</h2>
   <div>
     <label>SPH:
-      <input type="number" name="sph-og" id="sph-og" min=-20 max=20 step=0.25 value=0 />
+      <input type="number" name="cf_validated_sph_og" id="cf_validated_sph_og" min=-20 max=20 step=0.25 value=0 />
       <div id="sph-og_val"></div>
     </label>
   </div>
   <div>
     <label>CYL:
-      <input type="number" name="cyl-og" id="cyl-og" min=-10 max=0 step=0.25 value=0 />
+      <input type="number" name="cf_validated_cyl_og" id="cf_validated_cyl_og" min=-10 max=0 step=0.25 value=0 />
       <div id="cyl-og_val"></div>
     </label>
   </div>
@@ -62,7 +62,7 @@
 
   <div>
     <label>ADD:
-      <input type="number" name="add-og" id="add-og" min=0 max=4 step=0.25 value=0 />
+      <input type="number" name="cf_validated_add_og" id="cf_validated_add_og" min=0 max=4 step=0.25 value=0 />
       <div id="add-og_val"></div>
     </label>
   </div>
@@ -74,7 +74,7 @@
 
 <script>
   const DPVal = function(event) {
-    const elem = document.getElementById("DP");
+    const elem = document.getElementById("cf_validated_dp");
     const dp = Number.parseInt(elem.value);
     console.log("parse dp: " + dp);
     if (!(dp <= 80 && dp >= 60) ||
@@ -86,7 +86,7 @@
     }
   }
 
-document.getElementById("DP").addEventListener("change", DPVal);
+document.getElementById("cf_validated_dp").addEventListener("change", DPVal);
 
 const sphVal = function(oleil) {
   return function(event) {
@@ -106,8 +106,8 @@ const sphVal = function(oleil) {
   }
 }
 
-document.getElementById("sph-od").addEventListener("change", sphVal("od"));
-document.getElementById("sph-og").addEventListener("change", sphVal("og"));
+document.getElementById("cf_validated_sph_od").addEventListener("change", sphVal("od"));
+document.getElementById("cf_validated_sph_og").addEventListener("change", sphVal("og"));
 
 const validatorListenerFactory = function(field, validator) {
   return function(event) {
@@ -181,19 +181,19 @@ const addValidator = function(add) {
 
 attachSymmetricFieldValidators("add", addValidator);
 
-document.getElementById("add-od").addEventListener("change", () => {
-  document.getElementById("add-og").value = document.getElementById("add-od").value;
+document.getElementById("cf_validated_add_od").addEventListener("change", () => {
+  document.getElementById("cf_validated_add_og").value = document.getElementById("cf_validated_add_od").value;
 });
 
-document.getElementById("add-og").addEventListener("change", () => {
-  document.getElementById("add-og").value = document.getElementById("add-od").value;
+document.getElementById("cf_validated_add_og").addEventListener("change", () => {
+  document.getElementById("cf_validated_add_og").value = document.getElementById("cf_validated_add_od").value;
 });
 
 var urlParams = new URLSearchParams(window.location.search);
 
 if (urlParams.has("customerId")) {
   const customerId = urlParams.get("customerId")
-  document.getElementById("customerId").value = customerId
+  document.getElementById("cf_customer_id").value = customerId
   const action=`https://ssy7xkdh9i.execute-api.us-east-2.amazonaws.com/do`
   document.getElementById("rxForm").action = action
 } else {
