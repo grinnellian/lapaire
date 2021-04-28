@@ -122,7 +122,7 @@ const validatorListenerFactory = function(field, validator) {
 
 const attachSymmetricFieldValidators = function(field, validator) {
   for (const oeil of ["od", "og"]) {
-    document.getElementById(`${field}-${oeil}`).addEventListener("change", validatorListenerFactory(`${field}-${oeil}`, validator));
+    document.getElementById(`${field}_${oeil}`).addEventListener("change", validatorListenerFactory(`${field}-${oeil}`, validator));
   }
 }
 
@@ -151,8 +151,8 @@ attachSymmetricFieldValidators("cf_validated_axe", axeValidator);
 // override will override any value currently in the target field, or leave current value if unspecified
 const attachFieldDependency = function (source, listener, enabledCondition, enabledRequired=true) {
   for (const oeil of ["od", "og"]) {
-    const src = document.getElementById(`${source}-${oeil}`) || alert("missing dependency source " + `${source}-${oeil}`);
-    const lstnr = document.getElementById(`${listener}-${oeil}`) || alert("missing dependent field " + `${listener}-${oeil}`);
+    const src = document.getElementById(`${source}_${oeil}`) || alert("missing dependency source " + `${source}-${oeil}`);
+    const lstnr = document.getElementById(`${listener}_${oeil}`) || alert("missing dependent field " + `${listener}-${oeil}`);
     src.addEventListener("change", (event) => {
       console.log(`src ${src.id}: ${src.value}`);
       if (!enabledCondition(src.value)) {
