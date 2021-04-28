@@ -167,7 +167,7 @@ const attachFieldDependency = function (source, listener, enabledCondition, enab
   }
 }
 
-// attachFieldDependency("cyl", "axe", (cyl) => {return cyl < 0 && cyl >= -10}); // TODO I think needs to happen on page load
+attachFieldDependency("cf_validated_cyl", "cf_validated_axe", (cyl) => {return cyl < 0 && cyl >= -10}); // TODO I think needs to happen on page load
 
 const addValidator = function(add) {
   if(add != 0) {
