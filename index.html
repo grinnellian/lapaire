@@ -195,7 +195,7 @@ if (urlParams.has("customerId")) {
   const customerId = urlParams.get("customerId")
   const target = document.getElementById("cf_customer_id")
   target.value = customerId
-  target.setAttribute("readOnly");
+  target.setAttribute('readOnly', true)
   const action=`https://ssy7xkdh9i.execute-api.us-east-2.amazonaws.com/do`
   document.getElementById("rxForm").action = action
 } else {
